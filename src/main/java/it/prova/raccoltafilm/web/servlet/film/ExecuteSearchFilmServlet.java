@@ -30,14 +30,21 @@ public class ExecuteSearchFilmServlet extends HttpServlet {
 				dataPubblicazioneParameter, idRegParameter);
 
 		try {
+			example.setRegista(
+					MyServiceFactory.getRegistaServiceInstance().caricaSingoloElemento(Long.parseLong(idRegParameter)));
+
 			request.setAttribute("film_list_attribute",
 					MyServiceFactory.getFilmServiceInstance().findByExample(example));
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
 			request.getRequestDispatcher("/film/search.jsp").forward(request, response);
 			return;
+
 		}
+
 		request.getRequestDispatcher("/film/list.jsp").forward(request, response);
 	}
 
